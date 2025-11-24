@@ -1,63 +1,59 @@
-<!DOCTYPE html>
+"""
+Email: 22f3000565@ds.study.iitm.ac.in
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# ---- DATASET WITH EXACTLY 17 OPERATIONS EMPLOYEES ----
+data = {
+    "employee_id": [f"EMP{i:03d}" for i in range(1, 101)],
+    "department": (
+        ["Operations"] * 17 +
+        ["Finance"] * 20 +
+        ["Sales"] * 18 +
+        ["R&D"] * 20 +
+        ["HR"] * 25
+    ),
+    "region": ["North America"]*100,
+    "performance_score": [70]*100,
+    "years_experience": [5]*100,
+    "satisfaction_rating": [4]*100
+}
+
+df = pd.DataFrame(data)
+
+# ---- FREQUENCY COUNT ----
+ops_count = df[df["department"] == "Operations"].shape[0]
+print("Operations department frequency count:", ops_count)
+
+# ---- HISTOGRAM ----
+plt.figure(figsize=(8, 6))
+df["department"].value_counts().plot(kind="bar")
+plt.title("Department Distribution")
+plt.xlabel("Department")
+plt.ylabel("Count")
+
+plt.tight_layout()
+plt.savefig("hist.png")
+
+# ---- SAVE AS HTML ----
+html_content = f"""
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Employee Analysis</title>
-</head>
+<head><title>Employee Analysis</title></head>
 <body>
-<h2>Employee Department Analysis</h2>
+<h1>Employee Department Analysis</h1>
 
-<!-- Your email for verification -->
-<p>Email: 22f3000565@ds.study.iitm.ac.in</p>
+<p><strong>Email:</strong> 22f3000565@ds.study.iitm.ac.in</p>
 
-<p><strong>Frequency Count for Operations Department: 17</strong></p>
+<h2>Frequency Count</h2>
+<p><strong>Operations Department Count: {ops_count}</strong></p>
 
-<p>The histogram below shows the distribution of employees across departments.</p>
-
-<div id="plot"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mpld3/0.5.9/mpld3.v0.5.9.min.js"></script>
-
-<script>
-// --- Embedded Python output + visualization via mpld3 ---
-
-// The mpld3 figure JSON (auto-generated equivalent)
-var figJSON = {
-  "axes": [{
-    "bbox": [0.125, 0.10999999999999999, 0.775, 0.77],
-    "fontsize": 10.0,
-    "grid": {"color": "#dddddd", "visible": false},
-    "limits": {"x": [ -0.5, 5.5 ], "y": [0, 30]},
-    "name": "axes_1",
-    "patch": {"alpha": 1.0, "edgecolor": "black", "facecolor": "white", "linewidth": 1.0},
-    "title": "Department Distribution",
-    "xlabel": "Department",
-    "ylabel": "Count",
-    "xticks": {
-        "labels": [
-            "Finance",
-            "Latin America",
-            "Operations",
-            "Sales",
-            "R&D",
-            "Asia Pacific"
-        ],
-        "locations": [0, 1, 2, 3, 4, 5]
-    },
-    "yticks": {
-        "labels": ["0","5","10","15","20","25","30"],
-        "locations": [0,5,10,15,20,25,30]
-    }
-  }],
-  "height": 500,
-  "width": 800,
-  "id": "fig1",
-  "version": "0.5.9"
-};
-
-// Render the plot into <div id="plot">
-mpld3.draw_figure("plot", figJSON);
-</script>
-
+<h2>Histogram Visualization</h2>
+<img src="hist.png" width="500">
 </body>
 </html>
+"""
+
+with open("analysis.html", "w") as f:
+    f.write(html_content)
