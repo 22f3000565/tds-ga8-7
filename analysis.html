@@ -1,0 +1,60 @@
+<!-- Employee Performance Analysis -->
+<!-- Email for verification: 22f3000565@ds.study.iitm.ac.in -->
+
+<html>
+<head>
+    <title>Employee Department Analysis</title>
+</head>
+
+<body>
+<h2>Employee Department Analysis</h2>
+
+<p>This HTML file contains Python code used to load employee data, count Operations department frequency, and generate a department histogram.</p>
+
+<pre>
+<code>
+# Python code used to generate the analysis:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Synthetic 100-row dataset (sample provided + expanded)
+data = {
+    "employee_id": ["EMP{:03d}".format(i) for i in range(1, 101)],
+    "department": [
+        "Finance","Finance","Operations","Sales","R&D"
+    ] + ["Operations" if i % 5 == 0 else "Sales" for i in range(6, 101)],
+    "region": [
+        "North America", "Latin America", "Africa", "Africa", "Asia Pacific"
+    ] + ["Europe" if i % 3 == 0 else "Asia" for i in range(6, 101)],
+    "performance_score": [67.53,86.71,93.4,67.53,92.24] + [70 + (i % 25) for i in range(6, 101)],
+    "years_experience": [2,2,5,10,1] + [(i % 12) for i in range(6, 101)],
+    "satisfaction_rating": [3.9,4.1,3.4,4.3,4.9] + [3 + (i % 3) for i in range(6, 101)]
+}
+
+df = pd.DataFrame(data)
+
+# Frequency count for Operations department
+ops_count = df[df["department"] == "Operations"].shape[0]
+print("Operations department count:", ops_count)
+
+# Create histogram of departments
+plt.figure(figsize=(8, 8))
+sns.histplot(df["department"], stat="count", kde=False)
+plt.title("Department Distribution")
+plt.xlabel("Department")
+plt.ylabel("Count")
+plt.tight_layout()
+
+# Save figure
+plt.savefig("department_histogram.png")
+</code>
+</pre>
+
+<h3>📊 Output Histogram</h3>
+<p>The image below must also be included in your GitHub repository.</p>
+<img src="department_histogram.png" width="400">
+
+</body>
+</html>
